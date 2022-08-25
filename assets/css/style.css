@@ -110,6 +110,10 @@ body{
     box-shadow: 0px 0px 15px rgba(136, 136, 136, 0.596);
 }
 
+.top-bar-phantom{
+    width: 100%;
+    height: 75px;
+}
 .top-icons{
     display:flex;
     justify-content: space-between;
@@ -131,7 +135,6 @@ body{
 
 /* Content styles */
 .content{
-    margin-block:74px;
     width: 100%;
 }
 
@@ -161,6 +164,10 @@ body{
     display:flex;
     justify-content: space-between;
     align-items: center;
+}
+.message-box-phatom{
+    width: 100%;
+    height: 75px;
 }
 
 .message-box ion-icon{

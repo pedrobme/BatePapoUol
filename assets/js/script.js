@@ -1,5 +1,6 @@
 let username;
 let participants;
+let messagesBody = document.querySelector('.content');
 
 function toggleScreen(hide,show){
     document.querySelector(hide).classList.add("hide");
@@ -7,13 +8,13 @@ function toggleScreen(hide,show){
 }
 
 //Refreshers
-function refreshConnection(){
+function refreshConnection(){ 
     connectionStatus = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', username);
     connectionStatus.then(showConnectionStatus);
 }
 
 function showConnectionStatus(connectionStatusObject){
-    console.log(connectionStatusObject.data);
+    console.log(`Status da conexão: ${connectionStatusObject.data}`);
 }
 
 // Sign in functions
@@ -43,6 +44,7 @@ function completeSignIn(responseCode){
         document.querySelector(".log-error").innerHTML = '';
 
         let refreshConnectionInterval = setInterval(refreshConnection, 5000);
+        let refreshMessagesInterval = setInterval(extractData, 3000);
     }
 }
 
@@ -139,7 +141,9 @@ function transformData(response){
 }
 
 function loadData(content){
-    document.querySelector('.content').innerHTML = content;
+    messagesBody.innerHTML = content;
+    document.querySelector('.message-box-phatom').scrollIntoView({block: "end", behavior: "smooth"});
+    console.log('Mensagens carregadas');
 }
 
 
@@ -156,5 +160,6 @@ function getParticipantsArray(participants){
     return participantsArray;
 }
 
-extractData();
-extractParticipants();
+function sendMessage(){
+
+}
