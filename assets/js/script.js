@@ -1,8 +1,63 @@
-function extractData(){
-    let promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
-    promise.then(transformData);
+let username;
+let participants;
+
+function toggleScreen(hide,show){
+    document.querySelector(hide).classList.add("hide");
+    document.querySelector(show).classList.remove("hide");
 }
 
+//Refreshers
+function refreshConnection(){
+    connectionStatus = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', username);
+    connectionStatus.then(showConnectionStatus);
+}
+
+function showConnectionStatus(connectionStatusObject){
+    console.log(connectionStatusObject.data);
+}
+
+// Sign in functions
+function signIn(){
+    temp = document.querySelector('.name-input').value;
+    document.querySelector('.name-input').value = '';
+
+    username = {name: temp}
+
+    toggleScreen(".initial-screen", ".signin-load");
+
+    postUsername(username);
+}
+
+function postUsername(usernameObject){
+    let requisition = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usernameObject);
+
+    requisition.then(completeSignIn);
+    requisition.catch(refuseSignIn);
+}
+
+function completeSignIn(responseCode){
+
+    if(responseCode.status === 200){
+        setTimeout(toggleScreen, 2000, ".signin-load", ".signin-approved");
+        setTimeout(toggleScreen, 4000, ".signin-approved", ".website");
+        document.querySelector(".log-error").innerHTML = '';
+
+        let refreshConnectionInterval = setInterval(refreshConnection, 5000);
+    }
+}
+
+function refuseSignIn(responseCode){
+
+    if(responseCode.response.status === 400){
+        setTimeout(toggleScreen, 2000, ".signin-load", ".signin-refused");
+        setTimeout(toggleScreen, 4000, ".signin-refused", ".initial-screen");
+        document.querySelector(".log-error").innerHTML = 
+        'Erro 400: Já existe um usuário com o mesmo nome, tente outro nome de usuário.';
+    }
+}
+
+
+// Messages constructors functions
 function getStatusHTML(messageObject){
     const statusHTML = `
     <div class="message-structure color-status">
@@ -48,9 +103,13 @@ function getPrivateHTML(messageObject){
     return privateHTML
 }
 
-function transformData(response){
-    console.log(response);
+// ETL website data functions
+function extractData(){
+    let promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
+    promise.then(transformData);
+}
 
+function transformData(response){
     data = response.data;
     let content = '';
 
@@ -83,4 +142,19 @@ function loadData(content){
     document.querySelector('.content').innerHTML = content;
 }
 
+
+// Participants control functions
+function extractParticipants(){
+    let promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    promise.then(getParticipantsArray);
+}
+
+function getParticipantsArray(participants){
+
+    let participantsArray = participants.data;
+
+    return participantsArray;
+}
+
 extractData();
+extractParticipants();

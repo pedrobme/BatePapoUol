@@ -15,7 +15,41 @@
   </head>
 
   <body>
-    <div class="website">
+
+    <div class="initial-screen">
+      <img src="assets/img/logo 1.png" alt="logo bate papo UOL">
+      <div class="sign-in-screen">
+        <input type="text" placeholder="Digite seu nome" class="name-input"/>
+        <p class="log-error"></p>
+        <button class="sign-in" onclick="signIn()">Entrar</button>
+      </div>  
+    </div>
+
+    <div class="signin-load hide">
+      <img src="assets/img/logo 1.png" alt="logo bate papo UOL">
+      <div class="sign-in-icon">
+        <img src="assets/img/Loading_icon.gif" alt="loading">
+        <p>Entrando...</p>
+      </div>
+    </div>
+
+    <div class="signin-approved hide">
+      <img src="assets/img/logo 1.png" alt="logo bate papo UOL">
+      <div class="sign-in-icon">
+        <img src="assets/img/Sucesso.gif" alt="Seta verde login aprovado">
+        <p>Login aprovado!</p>
+      </div>
+    </div>
+
+    <div class="signin-refused hide">
+      <img src="assets/img/logo 1.png" alt="logo bate papo UOL">
+      <div class="sign-in-icon">
+        <img src="assets/img/Falha.gif" alt="x vermelho login recusado">
+        <p>Login falhou!</p>
+      </div>
+    </div>
+
+    <div class="website hide">
         <div class="top-bar">
             <div class="top-icons">
                 <img src="assets/img/logo 1.png" alt="Logo bate papo uol">
@@ -25,7 +59,7 @@
         <div class="content">
         </div>
         <div class="message-box">
-            <textarea name="textarea" rows="2" cols="5"placeholder="Escreva aqui..." wrap="hard"></textarea>
+            <textarea name="textarea" rows="2" cols="5" placeholder="Escreva aqui..." wrap="hard"></textarea>
             <div class="send-message">
               <ion-icon name="paper-plane-outline"></ion-icon>
             </div>

@@ -3,13 +3,92 @@
 }
 
 body{
-    background: #E5E5E5;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     line-height: 20px;
 }
 
+/* initial screen */
+.initial-screen{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 80vh;
+}
+
+.initial-screen img{
+    width: 100px;
+}
+
+.sign-in-screen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 100px;
+    width: 100%;
+}
+
+.sign-in-screen input{
+    height: 35px;
+    width: 250px;
+}
+
+.sign-in-screen input::placeholder{
+    text-align: center;
+}
+
+.log-error{
+    color: red;
+    text-align: center;
+}
+
+.sign-in-screen button{
+    height: 30px;
+    width: 100px;
+    color: #AAAAAA;
+    border-color: #AAAAAA;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* signin load */
+.signin-load, .signin-approved, .signin-refused{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 100%;
+    height: 400px;
+}
+
+.signin-load > img{
+    height: 80px;
+}
+
+.sign-in-icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+    width: 100%;
+}
+
+.sign-in-icon img{
+    height: 150px;
+}
+
+.sign-in-icon p{
+    font-size: 20px;
+}
+
+/* website */
 .website{
+    background: #E5E5E5;
     height: 100%;
     width: 100%;
     
@@ -38,7 +117,7 @@ body{
     margin:auto;
 
     width: 90%;
-    height: 100%
+    height: 100%;
 }
 
 .top-icons ion-icon{
@@ -63,10 +142,11 @@ body{
 
 .message-structure p{
     margin-inline:8px;
-    padding-block:10px
+    padding-block:10px;
+    word-wrap: break-word;
 }
 
-/* Type message style */
+/* Message box style */
 .message-box{
     position:fixed;
     bottom:0;
@@ -110,7 +190,7 @@ body{
     font-style: italic;
 }
 
-/* Message style */
+/* Messages styles */
 .message-time{
     color:#AAAAAA;
 }
@@ -129,4 +209,8 @@ strong{
 
 .color-private{
     background-color: #FFDEDE;
+}
+
+.hide{
+    display:none;
 }
