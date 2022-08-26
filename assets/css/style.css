@@ -8,6 +8,21 @@ body{
     line-height: 20px;
 }
 
+button{
+    width: 100px;
+    height: 40px;
+    color: black;
+    border-color: #AAAAAA;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    
+}
+
+.logo-img{
+    width: 90px;
+}
+
 /* initial screen */
 .initial-screen{
     display: flex;
@@ -15,10 +30,6 @@ body{
     justify-content: space-around;
     align-items: center;
     height: 80vh;
-}
-
-.initial-screen img{
-    width: 100px;
 }
 
 .sign-in-screen{
@@ -45,14 +56,6 @@ body{
     text-align: center;
 }
 
-.sign-in-screen button{
-    height: 30px;
-    width: 100px;
-    color: #AAAAAA;
-    border-color: #AAAAAA;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
 /* signin load */
 .signin-load, .signin-approved, .signin-refused{
@@ -63,10 +66,6 @@ body{
 
     width: 100%;
     height: 400px;
-}
-
-.signin-load > img{
-    height: 80px;
 }
 
 .sign-in-icon{
@@ -129,12 +128,12 @@ body{
 }
 
 .top-icons img{
-    width: 50px;
-    height: 35px;
+    width: 60px;
+    height: 40px;
 }
 
 /* Content styles */
-.content{
+.feed{
     width: 100%;
 }
 
@@ -165,6 +164,7 @@ body{
     justify-content: space-between;
     align-items: center;
 }
+
 .message-box-phatom{
     width: 100%;
     height: 75px;
@@ -197,6 +197,22 @@ body{
     font-style: italic;
 }
 
+.connection-lost-screen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 80vh;
+    text-align: center;
+    font-size: 22px;
+}
+
+
+
+
+.connection-lost-screen img{
+    width: 250px;
+}
 /* Messages styles */
 .message-time{
     color:#AAAAAA;

@@ -1,15 +1,21 @@
-let username;
-let participants;
-let messagesBody = document.querySelector('.content');
+let username,
+    
+participants,
+
+refreshConnectionInterval,
+
+refreshMessagesInterval,
+
+messageInput = document.querySelector(".message-writer");
 
 function toggleScreen(hide,show){
     document.querySelector(hide).classList.add("hide");
     document.querySelector(show).classList.remove("hide");
 }
 
-//Refreshers
+//Refresh connection functions
 function refreshConnection(){ 
-    connectionStatus = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', username);
+    let connectionStatus = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', username);
     connectionStatus.then(showConnectionStatus);
 }
 
@@ -43,8 +49,8 @@ function completeSignIn(responseCode){
         setTimeout(toggleScreen, 4000, ".signin-approved", ".website");
         document.querySelector(".log-error").innerHTML = '';
 
-        let refreshConnectionInterval = setInterval(refreshConnection, 5000);
-        let refreshMessagesInterval = setInterval(extractData, 3000);
+        refreshConnectionInterval = setInterval(refreshConnection, 5000);
+        refreshMessagesInterval = setInterval(extractData, 500);
     }
 }
 
@@ -55,6 +61,13 @@ function refuseSignIn(responseCode){
         setTimeout(toggleScreen, 4000, ".signin-refused", ".initial-screen");
         document.querySelector(".log-error").innerHTML = 
         'Erro 400: Já existe um usuário com o mesmo nome, tente outro nome de usuário.';
+    }
+
+    if(responseCode.response.status === 404){
+        setTimeout(toggleScreen, 2000, ".signin-load", ".signin-refused");
+        setTimeout(toggleScreen, 4000, ".signin-refused", ".initial-screen");
+        document.querySelector(".log-error").innerHTML = 
+        'Erro 404: Servidor não encontrado. Tente novamente mais tarde.';
     }
 }
 
@@ -113,36 +126,42 @@ function extractData(){
 
 function transformData(response){
     data = response.data;
-    let content = '';
 
-    for(let i=0; i<data.length;i++){
-
-        switch(data[i].type){
-
-            case 'status':
-                content += getStatusHTML(data[i]);
-                break;
-
-            case 'message':
-                content += getMessageHTML(data[i]);
-                break;
-
-            case 'private':
-                if(data[i].to === username){
-                    content += getPrivateHTML(data[i]);
-                break;
-                }
-
-                break;
-        }
-    }
-
-    loadData(content);
+    feed = '';
+    
+    data.forEach(getFeedHTML)
+    
+    loadData(feed);
 }
 
-function loadData(content){
-    messagesBody.innerHTML = content;
-    document.querySelector('.message-box-phatom').scrollIntoView({block: "end", behavior: "smooth"});
+function getFeedHTML(feedMessageObject){
+    let feedMessageHTML;
+
+    switch(feedMessageObject.type){
+
+        case 'status':
+            feedMessageHTML = getStatusHTML(feedMessageObject);
+            break;
+
+        case 'message':
+            feedMessageHTML = getMessageHTML(feedMessageObject);
+            break;
+
+        case 'private':
+            if(data[i].to === username.name){
+                feedMessageHTML = getPrivateHTML(feedMessageObject);
+            break;
+            }
+
+            break;
+    }
+
+    feed += feedMessageHTML;
+}
+
+function loadData(){
+    document.querySelector('.feed').innerHTML = feed;
+    document.querySelector('.message-box-phatom').scrollIntoView({block: "end", behavior: "auto"});
     console.log('Mensagens carregadas');
 }
 
@@ -160,6 +179,51 @@ function getParticipantsArray(participants){
     return participantsArray;
 }
 
-function sendMessage(){
+// Sending message functions
 
+
+function createMessage(){
+    if(messageInput.value != ''){
+        let typedMessage = messageInput.value
+        messageInput.value = "";
+        messageObject = 
+            {
+                from: username.name,
+                to: "Todos",
+                text: typedMessage,
+                type: "message"
+            }
+
+        sendRequest(messageObject)
+    } else{
+        alert('Não é permitido envio de mensagens em branco')
+    }
+}
+
+function sendRequest(messageObject){
+    request = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageObject)
+    request.then(messageSent)
+    request.catch(connectionLost)
+}
+
+function messageSent(){
+    console.log('Message sent successfully.')
+}
+
+function connectionLost(){
+    console.log('erro')
+    toggleScreen(".website", ".connection-lost-screen")
+
+    clearInterval(refreshConnectionInterval);
+    clearInterval(refreshMessagesInterval);
+}
+
+// Enviar mensagem com o enter
+document.querySelector(".message-writer").addEventListener("keypress", sendMessagePressingEnter)
+
+function sendMessagePressingEnter(event){
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.querySelector(".send-message").click();
+      }
 }
