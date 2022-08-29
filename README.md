@@ -1,6 +1,7 @@
 # projeto5-batepapouol
 
 variable receiverRefreshed: 
+
 This variable is necessary because, otherwise, if a participant is selected at the moment
 
 that him sign out, we will have none terms in the <ul> list having ".selected" class. This will give us an 
@@ -16,6 +17,7 @@ selected, as we can see in "js ln 230".
 
 
 ETL explained:
+    
 ETL is a process very common at data analysis, it consists in a three steps process: Extract, Transform and Load. 
 
 - Extract is the methods that we use to redeem the data from a Database, getting the raw data needy of a
