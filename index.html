@@ -19,7 +19,8 @@
     <div class="initial-screen">
       <img src="assets/img/logo 1.png" class="logo-img" alt="logo bate papo UOL">
       <div class="sign-in-screen">
-        <input type="text" placeholder="Digite seu nome" class="name-input"/>
+        <label for="username">Nome de usuário:</label>
+        <input type="text" placeholder="Digite seu nome" class="name-input" id="username" autocomplete="off"/>
         <p class="log-error"></p>
         <button class="sign-in" onclick="signIn()">Entrar</button>
       </div>  
@@ -53,21 +54,63 @@
         <div class="top-bar">
             <div class="top-icons">
                 <img src="assets/img/logo 1.png" class="logo-img" alt="Logo bate papo uol">
-                <ion-icon name="people" ></ion-icon>
+                <ion-icon name="people" onclick="showSideBar('.participants-side-bar')" >
+                </ion-icon>
             </div>
         </div>
         <div class="top-bar-phantom"></div>
-        <div class="feed">
+        <div class="feed"></div>
+        <div class="scroll-down hide" onclick="scrollDownPage()">
+          <p>Mostrar mais</p>
+          <img src="assets/img/scrolldown.gif" alt="Gif rolagem automática">
         </div>
         <div class="message-box-phatom"></div>
         <div class="message-box">
-            <textarea class="message-writer" name="textarea" rows="2" cols="5" placeholder="Escreva aqui..."></textarea>
+            <textarea class="message-writer" name="textarea" 
+            rows="2" cols="5" placeholder="Escreva aqui..."></textarea>
+
             <div class="send-message" onclick="createMessage()">
               <ion-icon name="paper-plane-outline"></ion-icon>
             </div>
         </div>
     </div>
 
+    <div class="participants-side-bar hide">
+
+      <div class="side-bar">
+        <strong>Escolha um contato para enviar uma mensagem:</strong>
+        <div class="participants">
+          <ul class="side-bar-list participants-list">
+          </ul>
+        </div>
+
+        <strong>Escolha a visibilidade:</strong>
+        <div class="visibility">
+          <ul class="side-bar-list">
+
+            <li data-identifier="visibility" class="list-element selected" onclick="selectMessageVisibility(this)">
+              <div class="list-element-content">
+                <ion-icon name="lock-open"></ion-icon>
+                <p class="visibility-type">Publico</p>
+              </div>
+              <ion-icon class ="checkmark" name="checkmark-sharp"></ion-icon>
+            </li>
+
+            <li data-identifier="visibility" class="list-element" onclick="selectMessageVisibility(this)">
+              <div class="list-element-content">
+                <ion-icon name="lock-closed"></ion-icon>
+                <p class="visibility-type">Reservadamente</p>
+              </div>
+              <ion-icon class ="checkmark hide" name="checkmark-sharp"></ion-icon>
+            </li>
+
+          </ul>
+        </div>
+        <button onclick="hideSideBar('.participants-side-bar')">Confirmar</button>
+      </div>
+
+    </div>
+    
     <div class="connection-lost-screen hide">
       <img src="assets/img/lostconnection.gif" alt="conexão perdida">
       <p>Oops. Aconteceu algo errado. Por favor retorne para a tela inicial.</p>
