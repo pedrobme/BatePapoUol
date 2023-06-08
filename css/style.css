@@ -6,6 +6,8 @@ body{
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     line-height: 20px;
+
+    word-break: break-all;
 }
 
 button{
@@ -129,6 +131,7 @@ button{
 
 .top-icons ion-icon{
     font-size: 33px;
+    cursor: pointer;
 }
 
 .top-icons img{
@@ -219,6 +222,8 @@ button{
     display:flex;
     justify-content: center;
     align-items: center;
+
+    cursor:pointer;
 }
 
 .message-box textarea::placeholder{
@@ -291,12 +296,20 @@ button{
     display:flex;
     justify-content: space-between;
     align-items: center;
+
+    cursor: pointer;
 }
 
 .side-bar li p{
     max-width: 65%;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    pointer-events: none;
+}
+
+.side-bar li :hover{
+    background-color:rgb(155, 161, 161);
 }
 
 .show-large-names{
