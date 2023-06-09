@@ -27,7 +27,7 @@ function signIn() {
 
 function postUsername(usernameObject) {
 	let requisition = axios.post(
-		"https://mock-api.driven.com.br/api/v6/uol/participants",
+		"https://batepapoapi.onrender.com/participants",
 		usernameObject
 	);
 
@@ -36,7 +36,7 @@ function postUsername(usernameObject) {
 }
 
 function completeSignIn(responseCode) {
-	if (responseCode.status === 200) {
+	if (responseCode.status === 201) {
 		setTimeout(toggleScreen, 2000, ".signin-load", ".signin-approved");
 		setTimeout(toggleScreen, 4000, ".signin-approved", ".website");
 		document.querySelector(".log-error").innerHTML = "";
@@ -52,7 +52,7 @@ function completeSignIn(responseCode) {
 }
 
 function refuseSignIn(responseCode) {
-	if (responseCode.response.status === 400) {
+	if (responseCode.response.status === 409) {
 		setTimeout(toggleScreen, 2000, ".signin-load", ".signin-refused");
 		setTimeout(toggleScreen, 4000, ".signin-refused", ".initial-screen");
 		if (username.name === "") {
@@ -74,9 +74,12 @@ function refuseSignIn(responseCode) {
 
 //Refresh connection functions
 function refreshConnection() {
-	let connectionStatus = axios.post(
-		"https://mock-api.driven.com.br/api/v6/uol/status",
-		username
+	let connectionStatus = axios.put(
+		"https://batepapoapi.onrender.com/status",
+		username,
+		{
+			headers: { user: username.name },
+		}
 	);
 	connectionStatus.then(showConnectionStatus);
 }
@@ -87,7 +90,9 @@ function showConnectionStatus(connectionStatusObject) {
 
 // ETL feed messages data functions. ETL process is described in 'README' file (ln 18)
 function extractFeedMessagesData() {
-	let promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+	let promise = axios.get("https://batepapoapi.onrender.com/messages", {
+		headers: { user: username.name },
+	});
 	promise.then(transformFeedMessagesData);
 }
 
@@ -183,9 +188,7 @@ function constructPrivateMessageHTML(messageObject) {
 
 // ETL participants list data functions. ETL process is described in 'README' (ln 18)
 function extractParticipantsData() {
-	let promise = axios.get(
-		"https://mock-api.driven.com.br/api/v6/uol/participants"
-	);
+	let promise = axios.get("https://batepapoapi.onrender.com/participants");
 	promise.then(transformParticipantsData);
 }
 
@@ -283,7 +286,6 @@ function createMessage() {
 		let typedMessage = messageInput.value;
 		messageInput.value = "";
 		messageObject = {
-			from: username.name,
 			to: receiver,
 			text: typedMessage,
 			type: getMessageType(),
@@ -297,8 +299,9 @@ function createMessage() {
 
 function sendRequest(messageObject) {
 	request = axios.post(
-		"https://mock-api.driven.com.br/api/v6/uol/messages",
-		messageObject
+		"https://batepapoapi.onrender.com/messages",
+		messageObject,
+		{ headers: { user: username.name } }
 	);
 	request.then(messageSent);
 	request.catch(connectionLost);
