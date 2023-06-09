@@ -1,38 +1,15 @@
-# projeto5-batepapouol
+# BatePapoUol
 
-variable receiverRefreshed: 
+This is a online chat with inspired on "Bate Papo UOL" a brazilian famous chat service. 
 
-This variable is necessary because, otherwise, if a participant is selected at the moment
+If you want to check the Back-end API, also developed by me checkout this GitHub repository: https://github.com/pedrobme/projeto13-batepapo-uol-api.
 
-that him sign out, we will have none terms in the < ul > list having ".selected" class. This will give us an 
+The project is full developed with pure HTML, CSS and JS vanilla.
 
-error of null elements found at querySelector callback on the next refreshing participants list cicle. 
-
-To avoid that, receiverRfreshed returns 'False' if the current refreshing of participants data don't find
-
-any participant term with ".selected" class. In that case, we set the default participant "todos" as
-
-selected, as we can see in "js ln 237".
-<br />
-<br />
-<br />
-<br />
-ETL explained:
-
-ETL is a process very common at data analysis, it consists in a three steps process: Extract, Transform and Load. 
-
-- Extract is the methods that we use to redeem the data from a Database, getting the raw data needy of a
-posterior treatment to improve your capability to provide meaningful results.
-
-    Extract functions: extractFeedMessagesData(); extractParticipantsData();
-
-- Transform is the union of process that change the format, structure or values of data, cleaning and
-filtering the raw data, giving an enhancement in your capability to provide meaningful results.
-
-    Transform functions: transformFeedMessagesData(); transformParticipantsData();
-
-- Load is the final stage of ETL process, in this stage the treated data is made available for your
- consumption trough views, displays or any form of data visualization. After that, the user may be able
- to get the maximum value of desired information.
-    
-    Load functions: loadFeedMessages(); loadParticipantsList();
+Some features:
+- Login success and failure screen
+- Lost connection screen if you get iddle for more than 15 seconds
+- Automatic message refresh
+- Automatic scrolling button
+- participants list
+- Private messages option, wich the message can only be viewed by who send and who receive the message
