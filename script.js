@@ -357,12 +357,8 @@ function scrollDownPage() {
 
 function automaticPageScroll() {
 	let pageScrolledBottom =
-<<<<<<< HEAD
 		window.innerHeight + window.pageYOffset >=
 		document.documentElement.scrollHeight;
-=======
-		window.innerHeight + window.pageYOffset >= document.body.offsetHeight;
->>>>>>> 8284625083f3a2306556eefc822ecf116451dad7
 
 	if (pageScrolledBottom) {
 		document
