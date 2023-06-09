@@ -357,7 +357,7 @@ function scrollDownPage() {
 
 function automaticPageScroll() {
 	let pageScrolledBottom =
-		window.innerHeight + window.pageYOffset >=
+		window.innerHeight + window.pageYOffset + 10 >=
 		document.documentElement.scrollHeight;
 
 	if (pageScrolledBottom) {
