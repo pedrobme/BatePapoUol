@@ -1,5 +1,7 @@
 let username,
+	userId,
 	feedHTML,
+	participantsListData,
 	participantsListHTML,
 	receiver = "Todos",
 	receiverRefreshed = true, //Explanation for this variable avaible in "README" file (ln 3)
@@ -33,7 +35,7 @@ function signIn() {
 
 function postUsername(usernameObject) {
 	let requisition = axios.post(
-		"https://batepapoapi.onrender.com/participants",
+		"http://localhost:5000/participants",
 		usernameObject
 	);
 
@@ -47,6 +49,7 @@ function completeSignIn(responseCode) {
 		setTimeout(toggleScreen, 4000, ".signin-approved", ".website");
 		document.querySelector(".log-error").innerHTML = "";
 
+		userId = responseCode.data.insertedId;
 		refreshConnection();
 		extractFeedMessagesData();
 		extractParticipantsData();
@@ -85,13 +88,9 @@ function refuseSignIn(responseCode) {
 
 //Refresh connection functions
 function refreshConnection() {
-	let connectionStatus = axios.put(
-		"https://batepapoapi.onrender.com/status",
-		username,
-		{
-			headers: { user: username.name },
-		}
-	);
+	let connectionStatus = axios.put("http://localhost:5000/status", username, {
+		headers: { user: username.name },
+	});
 	connectionStatus.then(showConnectionStatus);
 }
 
@@ -101,12 +100,9 @@ function showConnectionStatus(connectionStatusObject) {
 
 // ETL feed messages data functions. ETL process is described in 'README' file (ln 18)
 function extractFeedMessagesData() {
-	let promise = axios.get(
-		"https://batepapoapi.onrender.com/messages?limit=20",
-		{
-			headers: { user: username.name },
-		}
-	);
+	let promise = axios.get("http://localhost:5000/messages?limit=20", {
+		headers: { "user-id": userId },
+	});
 	promise.then(transformFeedMessagesData);
 }
 
@@ -202,14 +198,14 @@ function constructPrivateMessageHTML(messageObject) {
 
 // ETL participants list data functions. ETL process is described in 'README' (ln 18)
 function extractParticipantsData() {
-	let promise = axios.get("https://batepapoapi.onrender.com/participants");
+	let promise = axios.get("http://localhost:5000/participants");
 	promise.then(transformParticipantsData);
 }
 
 function transformParticipantsData(response) {
 	receiverRefreshed = false;
 
-	let participantsListData = response.data;
+	participantsListData = response.data;
 
 	// Construir primeiro participante "todos"
 	if (receiver === "Todos") {
@@ -305,18 +301,32 @@ function createMessage() {
 			type: getMessageType(),
 		};
 
-		sendRequest(messageObject);
+		let receiverId;
+
+		if (receiver === "Todos") {
+			receiverId = 0;
+		} else {
+			receiverId = participantsListData.find(
+				(participant) => participant.name === receiver
+			)["_id"];
+
+			console.log(receiverId);
+		}
+
+		sendRequest(messageObject, receiverId);
 	} else {
 		alert("Não é permitido envio de mensagens em branco");
 	}
 }
 
-function sendRequest(messageObject) {
-	request = axios.post(
-		"https://batepapoapi.onrender.com/messages",
-		messageObject,
-		{ headers: { user: username.name } }
-	);
+function sendRequest(messageObject, receiverId) {
+	request = axios.post("http://localhost:5000/messages", messageObject, {
+		headers: {
+			user: username.name,
+			"receiver-id": receiverId,
+			"sender-id": userId,
+		},
+	});
 	request.then(messageSent);
 	request.catch(connectionLost);
 }
@@ -368,7 +378,7 @@ function scrollDownPage() {
 
 function automaticPageScroll() {
 	let pageScrolledBottom =
-		window.innerHeight + window.pageYOffset + 10 >=
+		window.innerHeight + window.pageYOffset + 50 >=
 		document.documentElement.scrollHeight;
 
 	if (pageScrolledBottom) {
