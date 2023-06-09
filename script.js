@@ -90,18 +90,21 @@ function showConnectionStatus(connectionStatusObject) {
 
 // ETL feed messages data functions. ETL process is described in 'README' file (ln 18)
 function extractFeedMessagesData() {
-	let promise = axios.get("https://batepapoapi.onrender.com/messages", {
-		headers: { user: username.name },
-	});
+	let promise = axios.get(
+		"https://batepapoapi.onrender.com/messages?limit=20",
+		{
+			headers: { user: username.name },
+		}
+	);
 	promise.then(transformFeedMessagesData);
 }
 
-function transformFeedMessagesData(response) {
+async function transformFeedMessagesData(response) {
 	let messagesListData = response.data;
 
 	feedHTML = "";
 
-	messagesListData.forEach(constructFeedHtml);
+	await messagesListData.forEach(constructFeedHtml);
 
 	loadFeedMessages(feedHTML);
 }
