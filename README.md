@@ -13,3 +13,6 @@ Some features:
 - Automatic scrolling button
 - participants list
 - Private messages option, wich the message can only be viewed by who send and who receive the message
+
+# Be careful!
+# The messages are saved in the database and displayed to other users of the service. Do not write what may be offensive or sensitive data.
