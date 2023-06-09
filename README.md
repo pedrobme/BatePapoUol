@@ -1,6 +1,7 @@
 # BatePapoUol
+![image](https://github.com/pedrobme/BatePapoUol/assets/56630900/c677cd22-984d-41da-8b22-59c6278ba0db)
 
-TThis is an online chat inspired by "Bate Papo UOL," a famous Brazilian chat service.
+This is an online chat inspired by "Bate Papo UOL," a famous Brazilian chat service.
 
 If you want to check the back-end API, check out this GitHub repository: https://github.com/pedrobme/BatePapoUolAPI
 
