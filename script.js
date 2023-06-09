@@ -20,9 +20,15 @@ function signIn() {
 
 	username = { name: temp };
 
-	toggleScreen(".initial-screen", ".signin-load");
+	if (!username.name) {
+		alert(
+			"Não é permitido usar o nome vazio, por favor preencha o campo do nome."
+		);
+	} else {
+		toggleScreen(".initial-screen", ".signin-load");
 
-	postUsername(username);
+		postUsername(username);
+	}
 }
 
 function postUsername(usernameObject) {
@@ -69,6 +75,11 @@ function refuseSignIn(responseCode) {
 		setTimeout(toggleScreen, 4000, ".signin-refused", ".initial-screen");
 		document.querySelector(".log-error").innerHTML =
 			"Erro 404: Servidor não encontrado. Tente novamente mais tarde.";
+	}
+
+	if (responseCode.response.status === 500) {
+		document.querySelector(".log-error").innerHTML =
+			"Erro 500: Erro não conhecido. Entre em contato com o suporte";
 	}
 }
 
