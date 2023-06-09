@@ -35,7 +35,7 @@ function signIn() {
 
 function postUsername(usernameObject) {
 	let requisition = axios.post(
-		"http://localhost:5000/participants",
+		"https://batepapoapi.onrender.com/participants",
 		usernameObject
 	);
 
@@ -88,9 +88,13 @@ function refuseSignIn(responseCode) {
 
 //Refresh connection functions
 function refreshConnection() {
-	let connectionStatus = axios.put("http://localhost:5000/status", username, {
-		headers: { user: username.name },
-	});
+	let connectionStatus = axios.put(
+		"https://batepapoapi.onrender.com/status",
+		username,
+		{
+			headers: { user: username.name },
+		}
+	);
 	connectionStatus.then(showConnectionStatus);
 }
 
@@ -100,9 +104,12 @@ function showConnectionStatus(connectionStatusObject) {
 
 // ETL feed messages data functions. ETL process is described in 'README' file (ln 18)
 function extractFeedMessagesData() {
-	let promise = axios.get("http://localhost:5000/messages?limit=20", {
-		headers: { "user-id": userId },
-	});
+	let promise = axios.get(
+		"https://batepapoapi.onrender.com/messages?limit=20",
+		{
+			headers: { "user-id": userId },
+		}
+	);
 	promise.then(transformFeedMessagesData);
 }
 
@@ -198,7 +205,7 @@ function constructPrivateMessageHTML(messageObject) {
 
 // ETL participants list data functions. ETL process is described in 'README' (ln 18)
 function extractParticipantsData() {
-	let promise = axios.get("http://localhost:5000/participants");
+	let promise = axios.get("https://batepapoapi.onrender.com/participants");
 	promise.then(transformParticipantsData);
 }
 
@@ -320,13 +327,17 @@ function createMessage() {
 }
 
 function sendRequest(messageObject, receiverId) {
-	request = axios.post("http://localhost:5000/messages", messageObject, {
-		headers: {
-			user: username.name,
-			"receiver-id": receiverId,
-			"sender-id": userId,
-		},
-	});
+	request = axios.post(
+		"https://batepapoapi.onrender.com/messages",
+		messageObject,
+		{
+			headers: {
+				user: username.name,
+				"receiver-id": receiverId,
+				"sender-id": userId,
+			},
+		}
+	);
 	request.then(messageSent);
 	request.catch(connectionLost);
 }
