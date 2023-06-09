@@ -2,7 +2,7 @@
 
 TThis is an online chat inspired by "Bate Papo UOL," a famous Brazilian chat service.
 
-If you want to check the back-end API, check out this GitHub repository: https://github.com/pedrobme/projeto13-batepapo-uol-api.
+If you want to check the back-end API, check out this GitHub repository: https://github.com/pedrobme/BatePapoUolAPI
 
 The project is fully developed with pure HTML, CSS, and JS.
 
