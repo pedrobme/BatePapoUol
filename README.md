@@ -15,5 +15,8 @@ Some features:
 - Participants list
 - Private messages option, in which the message can only be viewed by the sender and the receiver.
 
+# Vercel deploy
+If you will use the vercel deploy, be aware that the login may take a while due to the slow response of the free deployment service.
+
 # Be careful!
 # The messages are saved in the database and displayed to other users of the service. Do not write what may be offensive or sensitive data.
